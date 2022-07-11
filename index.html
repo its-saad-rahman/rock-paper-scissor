@@ -4,12 +4,27 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="main.js"></script>
+    <script src="main.js" defer></script>
     <title>Rock Paper Scissor</title>
   </head>
   <body>
     <h1>Rock Paper Scissor</h1>
-    <p>Its run only in console</p>
-    <p>PRESS F12 to Play</p>
+    <div>
+      <button data-choice="rock">Rock</button>
+      <button data-choice="paper">Paper</button>
+      <button data-choice="scissor">Scissor</button>
+    </div>
+    <div class="round">Round <span>1</span></div>
+    <div class="score-board">
+      <div class="player">
+        <h3>Player</h3>
+        <p class="player-score"></p>
+      </div>
+      <div class="robot">
+        <h3>Robot</h3>
+        <p class="robot-score"></p>
+      </div>
+    </div>
+    <div class="game-status"></div>
   </body>
 </html>
