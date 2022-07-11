@@ -1,64 +1,88 @@
 //Global Variable
 let playerScore = 0;
 let computerScore = 0;
+const buttons = document.querySelectorAll('button[data-choice]');
+const gameStatus = document.querySelector('.game-status');
+const robotCurrentScore = document.querySelector('.robot-score');
+const playerCurrentScore = document.querySelector('.player-score');
+const resetBtn = document.querySelector('.reset');
+
 //computer generate randomly one of three choices
 function computerPlay() {
-  const option = ["rock", "paper", "scissor"];
+  const option = ['rock', 'paper', 'scissor'];
   choice = Math.ceil(Math.random() * option.length) - 1;
   return option[choice];
 }
 
-//Check winner
-function checkWinner() {
+//Check round winner
+function checkRoundWinner() {
   playerScore >= computerScore
-    ? console.log(`Player WINS`)
-    : console.log(`Computer WINS`);
+    ? (gameStatus.textContent = `Player WINS`)
+    : (gameStatus.textContent = `Robot WINS`);
 }
+//Check game winner
+function checkGameWinner() {
+  if (computerScore === 5) {
+    gameStatus.textContent = 'You lose!!! Robot beats Human';
+  } else if (playerScore === 5) {
+    gameStatus.textContent = 'You Win!!! Human beats Robot';
+  }
+}
+
 //a single round game
 function playRound(playerSelection, computerSelection) {
   if (playerSelection === computerSelection) {
-    return `Its a TIE!!`;
-  } else if (playerSelection === "rock" && computerSelection === "paper") {
+  } else if (playerSelection === 'rock' && computerSelection === 'paper') {
     computerScore++;
-    return `You Lose! ${computerSelection} beats ${playerSelection}`;
-  } else if (playerSelection === "paper" && computerSelection === "scissor") {
+  } else if (playerSelection === 'paper' && computerSelection === 'scissor') {
     computerScore++;
-    return `You Lose! ${computerSelection} beats ${playerSelection}`;
-  } else if (playerSelection === "scissor" && computerSelection === "rock") {
+  } else if (playerSelection === 'scissor' && computerSelection === 'rock') {
     computerScore++;
-    return `You Lose! ${computerSelection} beats ${playerSelection}`;
   } else {
     playerScore++;
-    return `You Win! ${playerSelection} beats ${computerSelection}`;
   }
 }
 
-//player choice
-function getPlayerInput() {
-  const playerInput = prompt(
-    "Please Enter one of you choice: Rock, Paper, Scissor",
-  );
-  let playerSelection = playerInput.toLowerCase();
-  if (
-    playerSelection === "rock" ||
-    playerSelection === "paper" ||
-    playerSelection === "scissor"
-  ) {
-    return playerSelection;
-  } else {
-    return "Please enter a valid choice";
-  }
-}
-//console.log(getPlayerInput());
 //game function
+function game(e) {
+  let playerSelection = e.target.dataset.choice;
+  let computerSelection = computerPlay();
 
-function game() {
-  for (let i = 0; i < 5; i++) {
-    let playerSelection = getPlayerInput();
-    let computerSelection = computerPlay();
-    playRound(playerSelection, computerSelection);
-    console.log(`Player: ${playerScore}, Computer: ${computerScore}`);
-  }
-  checkWinner();
+  playRound(playerSelection, computerSelection);
+  updateScoreBoard();
+  checkRoundWinner();
+  checkGameWinner();
 }
-game();
+
+//generate random win quote
+function winQuote() {}
+
+//generate random lose quote
+function loseQuote() {}
+
+//display final result
+function finlaResult() {
+  const modal = document.createElement('div');
+  const heading = document.createElement('h2');
+  modal.style.width = `400px`;
+  modal.style.height = `400px`;
+  heading.appendChild(heading);
+}
+
+//Updating game score board
+function updateScoreBoard() {
+  playerCurrentScore.textContent = playerScore;
+  robotCurrentScore.textContent = computerScore;
+}
+
+//Restart the game
+function restart() {
+  playerScore = 0;
+  computerScore = 0;
+  playerCurrentScore.textContent = 0;
+  robotCurrentScore.textContent = 0;
+}
+
+//All Event Listener
+buttons.forEach((button) => button.addEventListener('click', game));
+resetBtn.addEventListener('click', restart);
