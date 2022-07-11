@@ -1,10 +1,12 @@
 //Global Variable
+let round = 1;
 let playerScore = 0;
 let computerScore = 0;
 const buttons = document.querySelectorAll('button[data-choice]');
 const gameStatus = document.querySelector('.game-status');
 const robotCurrentScore = document.querySelector('.robot-score');
 const playerCurrentScore = document.querySelector('.player-score');
+const currentRound = document.querySelector('.current-round');
 const resetBtn = document.querySelector('.reset');
 
 //computer generate randomly one of three choices
@@ -41,6 +43,11 @@ function playRound(playerSelection, computerSelection) {
   } else {
     playerScore++;
   }
+}
+//Round Counter
+function roundCount() {
+  round += 1;
+  currentRound.textContent = round;
 }
 
 //game function
@@ -85,4 +92,5 @@ function restart() {
 
 //All Event Listener
 buttons.forEach((button) => button.addEventListener('click', game));
+buttons.forEach((button) => button.addEventListener('click', roundCount));
 resetBtn.addEventListener('click', restart);
