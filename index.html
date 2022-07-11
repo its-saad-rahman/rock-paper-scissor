@@ -4,7 +4,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
     <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"
+      defer
+    ></script>
     <script src="main.js" defer></script>
     <title>Rock Paper Scissor</title>
   </head>
@@ -12,9 +20,15 @@
     <div class="container">
       <h1>Rock Paper Scissor</h1>
       <div>
-        <button data-choice="rock">Rock</button>
-        <button data-choice="paper">Paper</button>
-        <button data-choice="scissor">Scissor</button>
+        <button data-choice="rock">
+          <i class="fa-regular fa-hand-back-fist"></i> Rock
+        </button>
+        <button data-choice="paper">
+          <i class="fa-regular fa-hand"></i> Paper
+        </button>
+        <button data-choice="scissor">
+          <i class="fa-regular fa-hand-scissors"></i> Scissor
+        </button>
       </div>
       <div class="round">Round <span>1</span></div>
       <div class="score-board">
@@ -28,6 +42,10 @@
         </div>
       </div>
       <div class="game-status"></div>
+      <button class="reset">
+        <i class="fa-solid fa-arrow-rotate-right"></i> Restart
+      </button>
+      <div class="modal"></div>
     </div>
   </body>
 </html>
