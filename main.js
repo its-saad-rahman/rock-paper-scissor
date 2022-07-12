@@ -8,6 +8,11 @@ const robotCurrentScore = document.querySelector('.robot-score');
 const playerCurrentScore = document.querySelector('.player-score');
 const currentRound = document.querySelector('.current-round');
 const resetBtn = document.querySelector('.reset');
+const modal = document.querySelector('.modal');
+const modalText = document.createElement('div');
+const playAgain = document.querySelector('.play-again');
+const iTag = document.createElement('i');
+const pTag = document.createElement('p');
 
 //computer generate randomly one of three choices
 function computerPlay() {
@@ -16,18 +21,25 @@ function computerPlay() {
   return option[choice];
 }
 
-//Check round winner
-function checkRoundWinner() {
-  playerScore >= computerScore
-    ? (gameStatus.textContent = `Player WINS`)
-    : (gameStatus.textContent = `Robot WINS`);
-}
 //Check game winner
 function checkGameWinner() {
   if (computerScore === 5) {
-    gameStatus.textContent = 'You lose!!! Robot beats Human';
+    pTag.textContent = `You Lost the game`;
+    modalText.classList.add('modal-text');
+    modalText.appendChild(pTag);
+    modal.appendChild(modalText);
+    modal.classList.add('modal-tranform');
+    modal.insertBefore(modalText, playAgain);
+    modal.style.border = `2px solid red`;
+    loseSound();
   } else if (playerScore === 5) {
-    gameStatus.textContent = 'You Win!!! Human beats Robot';
+    pTag.textContent = `You Win the game`;
+    modalText.classList.add('modal-text');
+    modalText.appendChild(pTag);
+    modal.insertBefore(modalText, playAgain);
+    modal.classList.add('modal-tranform');
+    modal.style.border = `2px solid green`;
+    winSound();
   }
 }
 
@@ -44,6 +56,7 @@ function playRound(playerSelection, computerSelection) {
     playerScore++;
   }
 }
+
 //Round Counter
 function roundCount() {
   round += 1;
@@ -57,23 +70,8 @@ function game(e) {
 
   playRound(playerSelection, computerSelection);
   updateScoreBoard();
-  checkRoundWinner();
+  //checkRoundWinner();
   checkGameWinner();
-}
-
-//generate random win quote
-function winQuote() {}
-
-//generate random lose quote
-function loseQuote() {}
-
-//display final result
-function finlaResult() {
-  const modal = document.createElement('div');
-  const heading = document.createElement('h2');
-  modal.style.width = `400px`;
-  modal.style.height = `400px`;
-  heading.appendChild(heading);
 }
 
 //Updating game score board
@@ -86,11 +84,34 @@ function updateScoreBoard() {
 function restart() {
   playerScore = 0;
   computerScore = 0;
+  round = 1;
   playerCurrentScore.textContent = 0;
   robotCurrentScore.textContent = 0;
+  currentRound.textContent = 1;
+  gameStatus.textContent = '';
 }
 
+//New Game
+function newGame() {
+  modal.classList.remove('modal-tranform');
+  restart();
+  modalText.remove();
+  // iTag.remove();
+  // pTag.remove();
+}
+
+function winSound() {
+  const audio = document.querySelector('audio[data-audio="win"');
+  audio.currentTime = 0;
+  audio.play();
+}
+function loseSound() {
+  const audio = document.querySelector('audio[data-audio="lose"');
+  audio.currentTime = 0;
+  audio.play();
+}
 //All Event Listener
 buttons.forEach((button) => button.addEventListener('click', game));
 buttons.forEach((button) => button.addEventListener('click', roundCount));
+playAgain.addEventListener('click', newGame);
 resetBtn.addEventListener('click', restart);
